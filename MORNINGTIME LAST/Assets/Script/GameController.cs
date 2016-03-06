@@ -48,9 +48,9 @@ public class GameController : MonoBehaviour {
         countdown = 5;
         timeText.fontSize = Screen.width / 15;
         timeText.text = "Time : " + timer.ToString("F1") + " s";
-        scoreText.fontSize = Screen.height / 10;
+        scoreText.fontSize = Screen.height / 12;
         scoreText.text = "Calories : " + score;
-        totalscoreText.fontSize = Screen.height / 10;
+        totalscoreText.fontSize = Screen.height / 12;
         totalscoreText.text = "Total Calories : " + totalscore;
         dayText.fontSize = Screen.height / 8;
         dayText.text = "day " + day;
