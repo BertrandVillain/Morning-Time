@@ -33,9 +33,19 @@ public class GameController : MonoBehaviour {
     public Food[] foodList;
     private int aliment = 0;
     private List<Food> foodForADay = new List<Food>();
+	//static int[] spotArrayX = {0, 15, 30, 45, 60, 75};
+	static Vector3[] spotArray = new Vector3[]
+		{
+			new Vector3((float)-4.5, (float)-1.5, (float) -2.8),
+			new Vector3((float) -2, -2, (float) -1.8),
+			new Vector3(0, -1, (float) -1.5),
+			new Vector3((float)2, (float)-2.5, (float) -1.8),
+			new Vector3((float)4.5, -2, (float) -2.8)
+		};
+	
 
-    // Use this for initialization
-    void Start ()
+	// Use this for initializatio
+	void Start ()
     {
         DeviceOrientation orientation = Input.deviceOrientation;
         score = 0;
@@ -173,6 +183,34 @@ public class GameController : MonoBehaviour {
         }
     }
 
+	void printFoodForADay()
+	{
+		int i = 0;
+
+		while (i < this.foodForADay.Count)
+		{
+			Debug.Log(foodForADay[i].name, gameObject);
+			i++;
+		}
+	}
+
+	//verifier que l'élément n'est pas déja dans la liste avant de l'ajouter
+	bool checkAddFoodForADay(int indexFoodList)
+	{
+		int i = 0;
+		Debug.Log(foodForADay.Count.ToString()+"-------", gameObject);
+		while (i < this.foodForADay.Count)
+		{
+			if (this.foodForADay[i] == this.foodList[indexFoodList])
+			{
+				Debug.Log("false", gameObject);
+				return (false);
+			}
+			i++;
+		}
+		return (true);
+	}
+
     void initFoodList(int limit)
     {
         int tmp;
@@ -187,9 +225,12 @@ public class GameController : MonoBehaviour {
         {
             tmp = Random.Range(0, foodList.Length);
 
-            this.foodForADay.Add(foodList[tmp]);
-            this.foodForADay[j].show();
+			while (this.checkAddFoodForADay(tmp) == false)
+				tmp = Random.Range(0, foodList.Length);
+			this.foodForADay.Add(foodList[tmp]);
+			this.foodForADay[j].show();
+			this.foodForADay[j].transform.position = spotArray[j]; //A rajouter pour alignement
         }
-
+		printFoodForADay();
     }
 }
