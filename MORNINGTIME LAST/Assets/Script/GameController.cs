@@ -18,11 +18,14 @@ public class GameController : MonoBehaviour {
     private int score;
     private int totalscore;
     private int day;
+    private int count;
+    private int tmp;
     private bool a;
     private bool pause;
     private bool end_alliment;
     public string NextScene;
 
+    public GUITexture pauseButton;
     public GUIText scoreText;
     public GUIText timeText;
     public GUIText dayText;
@@ -53,16 +56,17 @@ public class GameController : MonoBehaviour {
         end_alliment = true;
         a = true;
         pause = false;
+        count = 0;
         day = 1;
         timer = 10;
         countdown = 5;
-        timeText.fontSize = Screen.width / 15;
+        timeText.fontSize = Screen.width / 16;
         timeText.text = "Time : " + timer.ToString("F1") + " s";
-        scoreText.fontSize = Screen.height / 12;
+        scoreText.fontSize = Screen.height / 13;
         scoreText.text = "Calories : " + score;
-        totalscoreText.fontSize = Screen.height / 12;
+        totalscoreText.fontSize = Screen.height / 13;
         totalscoreText.text = "Total Calories : " + totalscore;
-        dayText.fontSize = Screen.height / 8;
+        dayText.fontSize = Screen.height / 9;
         dayText.text = "day " + day;
         countDownText.fontSize = Screen.width / 4;
         this.initFoodList(2);
@@ -85,7 +89,7 @@ public class GameController : MonoBehaviour {
        pause_game();
        if (a == true)
         {
-            Vector3 temp = new Vector3((float)0.47, (float)0.31, 0);
+            Vector3 temp = new Vector3((float)0.47, (float)0.27, 0);
             if (countdown > 0)
             {
                 assiette.SetActive(true);
@@ -102,7 +106,7 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-            Vector3 pos1 = new Vector3((float)0.47, (float)0.7, 0);
+            Vector3 pos1 = new Vector3((float)0.475, (float)0.68, 0);
             daymove.transform.position = pos1;
             if (Input.touchCount > 0)
             {
@@ -128,7 +132,7 @@ public class GameController : MonoBehaviour {
             }
             else
             {
-             reinit_day();
+                reinit_day();
             }
         }
    }
@@ -166,20 +170,24 @@ public class GameController : MonoBehaviour {
     //pause
     public void pause_game()
     {
-        if (Input.GetKeyDown("escape"))
+        if (pauseButton.HitTest(Input.mousePosition) && Input.GetButtonDown("Fire1"))
         {
             pause = !pause;
+            tmp = count;
         }
-
         if (pause == true)
         {
+            if (tmp + 20 < count && Input.GetButton("Fire1"))
+                pause = !pause;
             Time.timeScale = 0f;
             PauseMenu.SetActive(pause);
+            count++;
         }
         else
         {
             Time.timeScale = 1f;
             PauseMenu.SetActive(pause);
+            count++;
         }
     }
 
@@ -189,7 +197,6 @@ public class GameController : MonoBehaviour {
 
 		while (i < this.foodForADay.Count)
 		{
-			Debug.Log(foodForADay[i].name, gameObject);
 			i++;
 		}
 	}
@@ -198,12 +205,10 @@ public class GameController : MonoBehaviour {
 	bool checkAddFoodForADay(int indexFoodList)
 	{
 		int i = 0;
-		Debug.Log(foodForADay.Count.ToString()+"-------", gameObject);
 		while (i < this.foodForADay.Count)
 		{
 			if (this.foodForADay[i] == this.foodList[indexFoodList])
 			{
-				Debug.Log("false", gameObject);
 				return (false);
 			}
 			i++;

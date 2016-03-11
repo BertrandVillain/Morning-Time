@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class pause : MonoBehaviour
 {
 
+    public GameObject pauseMenu;
     public GUIStyle restart_GUI;
     public GUIStyle quit_GUI;
     public GUIStyle boxSTYLE;

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/0SCENE/JOUR.unity
+- path: Assets/0SCENE/MenuMode.unity
   isLoaded: 1
   isActive: 1
